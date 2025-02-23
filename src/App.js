@@ -14,6 +14,7 @@ import SignUp from "./components/register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profile from "./components/profile";
+import TaskBoard from "./mainpage";
 import { useState } from "react";
 import { auth } from "./components/firebase";
 
@@ -37,6 +38,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<SignUp />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/mainpage" element={<TaskBoard />} />
             </Routes>
             <ToastContainer />
           </div>

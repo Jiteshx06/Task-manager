@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
+  const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
@@ -18,6 +20,7 @@ function Profile() {
       }
     });
   };
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -50,6 +53,9 @@ function Profile() {
           </div>
           <button className="btn btn-primary" onClick={handleLogout}>
             Logout
+          </button>
+          <button className="btn btn-secondary" onClick={() => navigate ("/mainpage")}>
+            Next
           </button>
         </>
       ) : (
