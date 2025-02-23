@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import {
@@ -6,45 +6,60 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 
 import Login from "./components/login";
 import SignUp from "./components/register";
+import Profile from "./components/profile";
+import TaskBoard from "./mainpage";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Profile from "./components/profile";
-import TaskBoard from "./mainpage";
-import { useState } from "react";
+
 import { auth } from "./components/firebase";
 
 function App() {
   const [user, setUser] = useState();
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
     });
-  });
+  }, []);
+
   return (
     <Router>
-      <div className="App">
-        <div className="auth-wrapper">
-          <div className="auth-inner">
-            <Routes>
-              <Route
-                path="/"
-                element={user ? <Navigate to="/profile" /> : <Login />}
-              />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<SignUp />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/mainpage" element={<TaskBoard />} />
-            </Routes>
-            <ToastContainer />
-          </div>
-        </div>
-      </div>
+      <MainLayout>
+        <Routes>
+          <Route
+            path="/"
+            element={user ? <Navigate to="/profile" /> : <Login />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
+          
+          {/* TaskBoard will be rendered full-screen */}
+          <Route path="/mainpage" element={<TaskBoard />} />
+        </Routes>
+      </MainLayout>
+      <ToastContainer />
     </Router>
+  );
+}
+
+// Layout Component to manage different page structures
+function MainLayout({ children }) {
+  const location = useLocation();
+  const isFullScreen = location.pathname === "/mainpage";
+
+  return isFullScreen ? (
+    <>{children}</> // No wrapper for full-screen TaskBoard
+  ) : (
+    <div className="auth-wrapper">
+      <div className="auth-inner">{children}</div>
+    </div>
   );
 }
 

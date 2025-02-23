@@ -5,7 +5,7 @@ const TaskBoard = () => {
   return (
     <div className="taskBoard">
       {/* Sidebar */}
-      <div className="sidebar">
+      <aside className="sidebar">
         <h2>Board</h2>
         <ul>
           <li>Task</li>
@@ -14,36 +14,54 @@ const TaskBoard = () => {
           <li>Reports</li>
           <li>Payments</li>
         </ul>
-      </div>
+      </aside>
 
       {/* Main Content */}
-      <div className="main">
+      <main className="main">
         <header>
           <h1>Task Management Board</h1>
-          <input type="text" placeholder="Search" />
-          <button>Filter</button>
+          <div className="search-filter">
+            <input type="text" placeholder="Search tasks..." />
+            <button>Filter</button>
+          </div>
         </header>
 
         {/* Task Columns */}
-        <div className="task-container">
+        <section className="task-container">
+          {/* TO-DO Column */}
           <div className="task-column to-do">
             <h3>TO-DO</h3>
-            <div className="task high">HIGH<br />BRANDING</div>
+            <div className="task high">
+              <span className="task-title">Branding</span>
+              <span className="task-priority">HIGH</span>
+            </div>
           </div>
-          <div className="task-column progress">
-            <h3>PROGRESS</h3>
-            <div className="task medium">MEDIUM<br />PRINTING</div>
+
+          {/* PROGRESS Column */}
+          <div className="task-column-progress">
+            <h3 >PROGRESS</h3>
+            <div className="task-medium">
+              <span className="task-title">Printing</span>
+              <span className="task-priority">MEDIUM</span>
+            </div>
           </div>
+
+          {/* COMPLETED Column */}
           <div className="task-column completed">
             <h3>COMPLETED</h3>
-            <div className="task average">AVERAGE<br />BOARDING</div>
+            <div className="task average">
+              <span className="task-title">Boarding</span>
+              <span className="task-priority">AVERAGE</span>
+            </div>
           </div>
+
+          {/* OVERDUE Column */}
           <div className="task-column overdue">
             <h3>OVERDUE</h3>
-            <div className="task">No tasks overdue</div>
+            <div className="task empty-task">No tasks overdue</div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };
